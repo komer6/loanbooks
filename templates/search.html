@@ -1,0 +1,12 @@
+<form class="mb-4" action="/search" method="POST">
+    <div class="input-group">
+        <input type="text" class="form-control" name="searchTerm" placeholder="Search..." value="{{ request.form.searchTerm }}">
+        <select class="form-select" name="searchOption">
+            <option value="name" {% if request.form.searchOption == 'name' %}selected{% endif %}>Name</option>
+            <option value="author" {% if request.form.searchOption == 'author' %}selected{% endif %}>Author</option>
+            <option value="genre" {% if request.form.searchOption == 'genre' %}selected{% endif %}>Genre</option>
+            <option value="year" {% if request.form.searchOption == 'year' %}selected{% endif %}>Year</option>
+        </select>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>

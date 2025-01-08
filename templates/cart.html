@@ -1,0 +1,72 @@
+<!-- sidebar.html -->
+<div class="sidebar">
+    <h2>Your Books</h2>
+    {% for book in books %}
+        <div class="book-item">
+            <img src="{{ book.image }}" alt="{{ book.name }}" class="book-img">
+            <h3>{{ book.name }}</h3>
+            <p>Time Left: {{ book.loandate }} days</p>
+            <form action="{{ url_for('return_book', book_id=book.id) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Return</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Add some basic styling for the sidebar -->
+<style>
+    .sidebar {
+        width: 250px;
+        padding: 10px;
+        border-right: 1px solid #ddd;
+        position: fixed;
+        height: 100%;
+        background-color: #f4f4f4;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .book-item {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .book-item h3 {
+        font-size: 1.1rem;
+        margin: 10px 0;
+    }
+
+    .book-item p {
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .book-img {
+        width: 100px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        color: white;
+        background-color: red;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: darkred;
+    }
+</style>
