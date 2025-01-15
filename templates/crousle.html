@@ -12,13 +12,41 @@
       <div class="carousel-item {% if loop.first %}active{% endif %}">
         <div class="row align-items-center">
           <div class="col-md-3">
-            <img src="{{ url_for('static', filename='images/' + book.image) }}" class="d-block w-100 rounded" alt="{{ book.name }}">
+            <img src="{{ url_for('static', filename='images/' + (book.image if book.image else 'default.jpg')) }}" class="d-block w-100 rounded" alt="{{ book.name }}">
           </div>
           <div class="col-md-9">
             <h3>{{ book.name }}</h3>
             <p><strong>Author:</strong> {{ book.author }}</p>
             <p><strong>Genre:</strong> {{ book.genre }}</p>
             <p><strong>Year:</strong> {{ book.year }}</p>
+            {% if session.get('user_id') %}
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div class="alert-container">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        
+            <form action="{{ url_for('loan_book', book_id=book.id) }}" method="post">
+                <button type="submit" class="btn btn-success">Loan this Book</button>
+            </form>
+        {% endif %}
+        
+           
+            {% if session.get('user_id') %}
+            {% if session.get('is_admin') %}
+            <!-- Admin delete button -->
+            <form action="{{ url_for('delete_book', book_id=book.id) }}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?');">remove book from stock</button>
+            </form>
+            {% endif %}
+            {% endif %}
           </div>
         </div>
       </div>

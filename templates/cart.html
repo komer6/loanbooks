@@ -1,72 +1,28 @@
-<!-- sidebar.html -->
-<div class="sidebar">
-    <h2>Your Books</h2>
-    {% for book in books %}
-        <div class="book-item">
-            <img src="{{ book.image }}" alt="{{ book.name }}" class="book-img">
-            <h3>{{ book.name }}</h3>
-            <p>Time Left: {{ book.loandate }} days</p>
-            <form action="{{ url_for('return_book', book_id=book.id) }}" method="POST">
-                <button type="submit" class="btn btn-danger">Return</button>
-            </form>
-        </div>
-    {% endfor %}
+{% block content %}
+<div style="display: flex; align-items:flex-end;">
+    <div style="display: flex; align-items: flex-end; gap: 20px;"> <!-- Added gap for spacing -->
+        {% for cart_item, book in cart_items %}
+            <div style="flex: 1; text-align: center; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+                <h3>{{ book.name }}</h3>
+                <p>Author: {{ book.author }}</p>
+                
+                <!-- Display the adjusted return date here -->
+                <p>Return Date: <p id =bob>${cartItemLoanDate}</p></p>
+
+                <img src="{{ url_for('static', filename='images/' + (book.image if book.image else 'default.jpg')) }}" 
+                     alt="{{ book.name }}" style="max-width: 3cm; height: 5cm;">
+
+                <!-- Return Book Button -->
+                <form action="{{ url_for('return_book', cart_item_id=cart_item.id) }}" method="POST">
+                    <button type="submit">Return Book</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
-<!-- Add some basic styling for the sidebar -->
-<style>
-    .sidebar {
-        width: 250px;
-        padding: 10px;
-        border-right: 1px solid #ddd;
-        position: fixed;
-        height: 100%;
-        background-color: #f4f4f4;
-    }
-
-    .sidebar h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .book-item {
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .book-item h3 {
-        font-size: 1.1rem;
-        margin: 10px 0;
-    }
-
-    .book-item p {
-        font-size: 0.9rem;
-        color: #555;
-    }
-
-    .book-img {
-        width: 100px;
-        height: 150px;
-        object-fit: cover;
-        margin-bottom: 10px;
-    }
-
-    .btn {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-        color: white;
-        background-color: red;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-
-    .btn:hover {
-        background-color: darkred;
-    }
-</style>
+<script>
+    var cartItemLoanDate = new Date("{{ cart_items.loandate }}");
+    bob.innerHTML='{{ cart_items.loandate }}'    
+</script>
+{% endblock %}

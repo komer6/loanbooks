@@ -10,27 +10,36 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">My Website</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
-          </li>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Elibary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
+        </li>
+        {% if session.get('user_id') %}
+          {% if session.get('is_admin') %}
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ url_for('add_book') }}">Add Book</a>
+            </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link active" href="{{ url_for('logout') }}">Logout</a>
           </li>
+        {% else %}
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('login') }}">login</a>
+            <a class="nav-link active" href="{{ url_for('login') }}">Login</a>
           </li>
-        </ul>
-      </div>
+        {% endif %}
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+
 
   <!-- Content Block -->
   <main class="container my-5">
